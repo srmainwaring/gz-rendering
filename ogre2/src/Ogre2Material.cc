@@ -403,7 +403,8 @@ void Ogre2Material::SetRenderOrder(const float _renderOrder)
   Ogre::Root *root = Ogre2RenderEngine::Instance()->OgreRoot();
   Ogre::RenderSystem *renderSystem = root->getRenderSystem();
 
-  if (renderSystem->isReverseDepth())
+  if (renderSystem->isReverseDepth() && 
+      Ogre2RenderEngine::Instance()->GraphicsAPI() != GraphicsAPI::METAL)
   {
     // Reverse depth needs 100x scale AND ends up being superior
     // See https://github.com/gazebosim/gz-rendering/
