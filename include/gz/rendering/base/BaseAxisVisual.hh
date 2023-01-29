@@ -17,6 +17,8 @@
 #ifndef GZ_RENDERING_BASE_BASEAXISVISUAL_HH_
 #define GZ_RENDERING_BASE_BASEAXISVISUAL_HH_
 
+#include <gz/common/Console.hh>
+
 #include "gz/rendering/AxisVisual.hh"
 #include "gz/rendering/ArrowVisual.hh"
 #include "gz/rendering/Scene.hh"
@@ -137,24 +139,29 @@ namespace gz
     template <class T>
     void BaseAxisVisual<T>::Init()
     {
+      using namespace gz::common;
+
       T::Init();
 
-      ArrowVisualPtr xArrow = this->Scene()->CreateArrowVisual();
-      xArrow->SetLocalPosition(0, 0, 0);
-      xArrow->SetLocalRotation(0, GZ_PI / 2, 0);
-      xArrow->SetMaterial("Default/TransRed");
-      this->AddChild(xArrow);
+      // ArrowVisualPtr xArrow = this->Scene()->CreateArrowVisual();
+      // xArrow->SetLocalPosition(0, 0, 0);
+      // xArrow->SetLocalRotation(0, GZ_PI / 2, 0);
+      // xArrow->SetMaterial("Default/TransRed");
+      // gzdbg << "Add xArrow, Id[" << xArrow->Id() << "]\n";
+      // this->AddChild(xArrow);
 
-      ArrowVisualPtr yArrow = this->Scene()->CreateArrowVisual();
-      yArrow->SetLocalPosition(0, 0, 0);
-      yArrow->SetLocalRotation(-GZ_PI / 2, 0, 0);
-      yArrow->SetMaterial("Default/TransGreen");
-      this->AddChild(yArrow);
+      // ArrowVisualPtr yArrow = this->Scene()->CreateArrowVisual();
+      // yArrow->SetLocalPosition(0, 0, 0);
+      // yArrow->SetLocalRotation(-GZ_PI / 2, 0, 0);
+      // yArrow->SetMaterial("Default/TransGreen");
+      // gzdbg << "Add yArrow, Id[" << yArrow->Id() << "]\n";
+      // this->AddChild(yArrow);
 
       ArrowVisualPtr zArrow = this->Scene()->CreateArrowVisual();
       zArrow->SetLocalPosition(0, 0, 0);
       zArrow->SetLocalRotation(0, 0, 0);
-      zArrow->SetMaterial("Default/TransBlue");
+      // zArrow->SetMaterial("Default/TransBlue");
+      gzdbg << "Add zArrow, Id[" << zArrow->Id() << "]\n";
       this->AddChild(zArrow);
     }
 

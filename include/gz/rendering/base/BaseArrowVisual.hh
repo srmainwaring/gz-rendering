@@ -19,6 +19,7 @@
 
 #include <string>
 
+#include <gz/common/Console.hh>
 #include <gz/common/MeshManager.hh>
 
 #include "gz/rendering/ArrowVisual.hh"
@@ -124,61 +125,63 @@ namespace gz
     template <class T>
     void BaseArrowVisual<T>::ShowArrowHead(bool _b)
     {
-      NodePtr child = this->ChildByIndex(2);
-      VisualPtr visual = std::dynamic_pointer_cast<Visual>(child);
-      if (visual)
-      {
-        visual->SetVisible(_b);
-      }
+      // NodePtr child = this->ChildByIndex(2);
+      // VisualPtr visual = std::dynamic_pointer_cast<Visual>(child);
+      // if (visual)
+      // {
+      //   visual->SetVisible(_b);
+      // }
     }
 
     //////////////////////////////////////////////////
     template <class T>
     void BaseArrowVisual<T>::ShowArrowShaft(bool _b)
     {
-      NodePtr child = this->ChildByIndex(1);
-      VisualPtr visual = std::dynamic_pointer_cast<Visual>(child);
-      if (visual)
-      {
-        visual->SetVisible(_b);
-      }
+      // NodePtr child = this->ChildByIndex(1);
+      // VisualPtr visual = std::dynamic_pointer_cast<Visual>(child);
+      // if (visual)
+      // {
+      //   visual->SetVisible(_b);
+      // }
     }
 
     //////////////////////////////////////////////////
     template <class T>
     void BaseArrowVisual<T>::ShowArrowRotation(bool _b)
     {
-      NodePtr child = this->ChildByIndex(0);
-      VisualPtr visual = std::dynamic_pointer_cast<Visual>(child);
-      if (visual)
-      {
-        visual->SetVisible(_b);
-        this->rotationVisible = _b;
-      }
+      // NodePtr child = this->ChildByIndex(0);
+      // VisualPtr visual = std::dynamic_pointer_cast<Visual>(child);
+      // if (visual)
+      // {
+      //   visual->SetVisible(_b);
+      //   this->rotationVisible = _b;
+      // }
     }
 
     //////////////////////////////////////////////////
     template <class T>
     void BaseArrowVisual<T>::SetVisible(bool _visible)
     {
-      T::SetVisible(_visible);
+      // T::SetVisible(_visible);
 
-      NodePtr child = this->ChildByIndex(0);
-      VisualPtr visual = std::dynamic_pointer_cast<Visual>(child);
-      if (visual)
-      {
-        // Force rotation visual visibility to false
-        // if the arrow visual is not visible.
-        // Else, rotation visual's visibility overrides
-        // its parent's visibility.
-        visual->SetVisible(this->rotationVisible && _visible);
-      }
+      // NodePtr child = this->ChildByIndex(0);
+      // VisualPtr visual = std::dynamic_pointer_cast<Visual>(child);
+      // if (visual)
+      // {
+      //   // Force rotation visual visibility to false
+      //   // if the arrow visual is not visible.
+      //   // Else, rotation visual's visibility overrides
+      //   // its parent's visibility.
+      //   visual->SetVisible(this->rotationVisible && _visible);
+      // }
     }
 
     //////////////////////////////////////////////////
     template <class T>
     void BaseArrowVisual<T>::Init()
     {
+      using namespace gz::common;
+
       T::Init();
 
       VisualPtr cone = this->Scene()->CreateVisual();
@@ -187,25 +190,28 @@ namespace gz
       cone->SetLocalPosition(0, 0, 0);
       cone->SetLocalScale(0.1, 0.1, 0.25);
       this->AddChild(cone);
+      gzdbg << "Add Cone, Id[" << cone->Id() << "]\n";
 
-      VisualPtr cylinder = this->Scene()->CreateVisual();
-      cylinder->AddGeometry(this->Scene()->CreateCylinder());
-      cylinder->SetOrigin(0, 0, 0.5);
-      cylinder->SetLocalPosition(0, 0, 0);
-      cylinder->SetLocalScale(0.05, 0.05, 0.5);
-      this->AddChild(cylinder);
+      // VisualPtr cylinder = this->Scene()->CreateVisual();
+      // cylinder->AddGeometry(this->Scene()->CreateCylinder());
+      // cylinder->SetOrigin(0, 0, 0.5);
+      // cylinder->SetLocalPosition(0, 0, 0);
+      // cylinder->SetLocalScale(0.05, 0.05, 0.5);
+      // this->AddChild(cylinder);
+      // gzdbg << "Add Cylinder, Id[" << cylinder->Id() << "]\n";
 
-      common::MeshManager *meshMgr = common::MeshManager::Instance();
-      std::string rotMeshName = "arrow_rotation";
-      if (!meshMgr->HasMesh(rotMeshName))
-        meshMgr->CreateTube(rotMeshName, 0.070f, 0.075f, 0.01f, 1, 32);
+      // common::MeshManager *meshMgr = common::MeshManager::Instance();
+      // std::string rotMeshName = "arrow_rotation";
+      // if (!meshMgr->HasMesh(rotMeshName))
+      //   meshMgr->CreateTube(rotMeshName, 0.070f, 0.075f, 0.01f, 1, 32);
 
-      VisualPtr rotationVis = this->Scene()->CreateVisual();
-      rotationVis->AddGeometry(this->Scene()->CreateMesh(rotMeshName));
-      rotationVis->SetOrigin(0, 0, -0.125);
-      rotationVis->SetLocalPosition(0, 0, 0);
-      rotationVis->SetVisible(this->rotationVisible);
-      this->AddChild(rotationVis);
+      // VisualPtr rotationVis = this->Scene()->CreateVisual();
+      // rotationVis->AddGeometry(this->Scene()->CreateMesh(rotMeshName));
+      // rotationVis->SetOrigin(0, 0, -0.125);
+      // rotationVis->SetLocalPosition(0, 0, 0);
+      // rotationVis->SetVisible(this->rotationVisible);
+      // this->AddChild(rotationVis);
+      // gzdbg << "Add Rotation, Id[" << rotationVis->Id() << "]\n";
 
       this->SetOrigin(0, 0, -0.5);
     }

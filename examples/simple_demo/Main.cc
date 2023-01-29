@@ -183,6 +183,31 @@ void buildScene(ScenePtr _scene)
 
   // track target
   camera->SetTrackTarget(box);
+
+  // Remove center
+  gzmsg << "Remove center\n";
+  center->Parent()->RemoveChild(center);
+  _scene->DestroyVisual(center, true);
+
+  // Remove capsule
+  gzmsg << "Remove capsule\n";
+  capsuleVisual->Parent()->RemoveChild(capsuleVisual);
+  _scene->DestroyVisual(capsuleVisual, true);
+
+  // Remove plane
+  gzmsg << "Remove plane\n";
+  plane->Parent()->RemoveChild(plane);
+  _scene->DestroyVisual(plane, true);
+
+  // Remove plane2
+  gzmsg << "Remove plane2\n";
+  plane2->Parent()->RemoveChild(plane2);
+  _scene->DestroyVisual(plane2, true);
+
+  // Remove axis
+  gzmsg << "Remove axis\n";
+  axis->Parent()->RemoveChild(axis);
+  _scene->DestroyVisual(axis, true);
 }
 
 //////////////////////////////////////////////////

@@ -286,9 +286,48 @@ void BaseScene::DestroyNode(NodePtr _node, bool _recursive)
 }
 
 //////////////////////////////////////////////////
+namespace
+{
+void DebugNodeRecursive(NodePtr _node,
+    std::set<unsigned int> &_nodeIds,
+    int level = 0)
+{
+  gzdbg << "Level[" << level << "] "
+        << "Node[" << _node->Id() << "] "
+        << "Parent[" << _node->Parent()->Id() << "] "
+        << "ChildCount[" << _node->ChildCount() << "]\n";
+
+  // check if we have visited this node before
+  if (_nodeIds.find(_node->Id()) != _nodeIds.end())
+  {
+    gzwarn << "Detected loop in scene tree.\n";
+    return;
+  }
+  _nodeIds.insert(_node->Id());
+
+  // debug child nodes first
+  for (auto i = 0; i < _node->ChildCount(); ++i)
+  {
+    DebugNodeRecursive(_node->ChildByIndex(i), _nodeIds, level + 1);
+  }
+}
+
+void DebugNode(NodePtr _node)
+{
+  std::set<unsigned int> nodeIds;
+  DebugNodeRecursive(_node, nodeIds);
+}
+}
+
+//////////////////////////////////////////////////
 void BaseScene::DestroyNodeRecursive(NodePtr _node,
     std::set<unsigned int> &_nodeIds)
 {
+  gzdbg << "DestroyNode[" << _node->Id() << "]\n";
+  DebugNode(_node);
+
+  gzdbg << "* Node[" << _node->Id() << "]\n";
+
   // check if we have visited this node before
   if (_nodeIds.find(_node->Id()) != _nodeIds.end())
   {
@@ -299,11 +338,41 @@ void BaseScene::DestroyNodeRecursive(NodePtr _node,
   }
   _nodeIds.insert(_node->Id());
 
+  gzdbg << "+ Node[" << _node->Id() << "]\n";
+
   // destroy child nodes first
   while (_node->ChildCount() > 0u)
   {
+    auto childCount1 = _node->ChildCount();
+
+    gzdbg << "@ Node[" << _node->Id() << "]\n";
+
+    gzdbg << "+ Node[" << _node->Id() << "] "
+          << "ChildCount[" << _node->ChildCount() << "] "
+          << "ChildByIndex(0)[" << _node->ChildByIndex(0u)->Id() << "]\n";
+
     this->DestroyNodeRecursive(_node->ChildByIndex(0u), _nodeIds);
+
+    auto childCount2 = _node->ChildCount();
+    if (childCount1 == childCount2)
+    {
+      gzerr << "Destroying child has not decreased child count\n";
+    }
+
+    if (childCount2 > 0u)
+    {
+      gzdbg << "- Node[" << _node->Id() << "] "
+            << "ChildCount[" << _node->ChildCount() << "] "
+            << "ChildByIndex(0)[" << _node->ChildByIndex(0u)->Id() << "]\n";
+    }
+    else
+    {
+      gzdbg << "- Node[" << _node->Id() << "] "
+            << "ChildCount[" << _node->ChildCount() << "]\n";
+    }
   }
+
+  gzdbg << "% Node[" << _node->Id() << "]\n";
 
   // destroy node
   this->nodes->Destroy(_node);
