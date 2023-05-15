@@ -23,6 +23,7 @@
   #include <windows.h>
 #endif
 #include <gz/math/Helpers.hh>
+#include "gz/rendering/RenderingEvents.hh"
 #include "gz/rendering/ogre/OgreDepthCamera.hh"
 #include "gz/rendering/ogre/OgreMaterial.hh"
 
@@ -61,14 +62,16 @@ class gz::rendering::OgreDepthCameraPrivate
   public: float dataMinVal = -gz::math::INF_D;
 
   /// \brief Event used to signal rgb point cloud data
-  public: gz::common::EventT<void(const float *,
-              unsigned int, unsigned int, unsigned int,
-              const std::string &)> newRgbPointCloud;
+  // public: gz::common::EventT<void(const float *,
+  //             unsigned int, unsigned int, unsigned int,
+  //             const std::string &)> newRgbPointCloud;
+  public: gz::rendering::events::NewOgreRgbPointCloud newRgbPointCloud;
 
   /// \brief Event used to signal depth data
-  public: gz::common::EventT<void(const float *,
-              unsigned int, unsigned int, unsigned int,
-              const std::string &)> newDepthFrame;
+  // public: gz::common::EventT<void(const float *,
+  //             unsigned int, unsigned int, unsigned int,
+  //             const std::string &)> newDepthFrame;
+  public: gz::rendering::events::NewOgreDepthFrame newDepthFrame;
 };
 
 using namespace gz;

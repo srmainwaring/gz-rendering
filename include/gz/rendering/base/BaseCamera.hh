@@ -28,6 +28,7 @@
 
 #include "gz/rendering/Camera.hh"
 #include "gz/rendering/Image.hh"
+#include "gz/rendering/RenderingEvents.hh"
 #include "gz/rendering/RenderEngine.hh"
 #include "gz/rendering/Scene.hh"
 #include "gz/rendering/base/BaseRenderTarget.hh"
@@ -209,8 +210,9 @@ namespace gz
       protected: virtual RenderTargetPtr RenderTarget() const = 0;
 
       GZ_UTILS_WARN_IGNORE__DLL_INTERFACE_MISSING
-      protected: common::EventT<void(const void *, unsigned int, unsigned int,
-                     unsigned int, const std::string &)> newFrameEvent;
+      // protected: common::EventT<void(const void *, unsigned int, unsigned int,
+      //                unsigned int, const std::string &)> newFrameEvent;
+      protected: gz::rendering::events::NewFrameEvent newFrameEvent;
 
       protected: ImagePtr imageBuffer;
 

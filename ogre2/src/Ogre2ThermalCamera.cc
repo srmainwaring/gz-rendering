@@ -44,6 +44,7 @@
 #include <gz/common/Filesystem.hh>
 #include <gz/math/Helpers.hh>
 
+#include "gz/rendering/RenderingEvents.hh"
 #include "gz/rendering/RenderTypes.hh"
 #include "gz/rendering/ogre2/Ogre2Conversions.hh"
 #include "gz/rendering/ogre2/Ogre2Heightmap.hh"
@@ -179,9 +180,10 @@ class gz::rendering::Ogre2ThermalCameraPrivate
   public: Ogre::MaterialPtr thermalMaterial;
 
   /// \brief Event used to signal thermal image data
-  public: gz::common::EventT<void(const uint16_t *,
-              unsigned int, unsigned int, unsigned int,
-              const std::string &)> newThermalFrame;
+  // public: gz::common::EventT<void(const uint16_t *,
+  //             unsigned int, unsigned int, unsigned int,
+  //             const std::string &)> newThermalFrame;
+  public: gz::rendering::events::NewOgre2ThermalFrame newThermalFrame;
 
   /// \brief Pointer to material switcher
   public: std::unique_ptr<Ogre2ThermalCameraMaterialSwitcher>

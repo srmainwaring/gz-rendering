@@ -24,6 +24,7 @@
 #include "gz/rendering/ogre2/Ogre2Camera.hh"
 #include "gz/rendering/ogre2/Ogre2GpuRays.hh"
 #include "gz/rendering/ogre2/Ogre2RenderEngine.hh"
+#include "gz/rendering/RenderingEvents.hh"
 #include "gz/rendering/RenderTypes.hh"
 #include "gz/rendering/ogre2/Ogre2Conversions.hh"
 #include "gz/rendering/ogre2/Ogre2Heightmap.hh"
@@ -123,9 +124,10 @@ class GZ_RENDERING_OGRE2_HIDDEN gz::rendering::Ogre2GpuRaysPrivate
   /// \param[in] _height Height of frame.
   /// \param[in] _channel Number of channels
   /// \param[in] _format Format of frame.
-  public: gz::common::EventT<void(const float *,
-               unsigned int, unsigned int, unsigned int,
-               const std::string &)> newGpuRaysFrame;
+  // public: gz::common::EventT<void(const float *,
+  //              unsigned int, unsigned int, unsigned int,
+  //              const std::string &)> newGpuRaysFrame;
+  public: gz::rendering::events::NewOgre2GpuRaysFrame newGpuRaysFrame;
 
   /// \brief Raw buffer of gpu rays data.
   public: float *gpuRaysBuffer = nullptr;

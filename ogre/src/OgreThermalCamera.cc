@@ -26,6 +26,7 @@
 #include <limits>
 
 #include <gz/math/Helpers.hh>
+#include "gz/rendering/RenderingEvents.hh"
 #include "gz/rendering/ShaderParams.hh"
 #include "gz/rendering/ogre/OgreThermalCamera.hh"
 #include "gz/rendering/ogre/OgreMaterial.hh"
@@ -120,9 +121,10 @@ class gz::rendering::OgreThermalCameraPrivate
   public: uint16_t dataMinVal = 0u;
 
   /// \brief Event used to signal thermal image data
-  public: gz::common::EventT<void(const uint16_t *,
-              unsigned int, unsigned int, unsigned int,
-              const std::string &)> newThermalFrame;
+  // public: gz::common::EventT<void(const uint16_t *,
+  //             unsigned int, unsigned int, unsigned int,
+  //             const std::string &)> newThermalFrame;
+  public: gz::rendering::events::NewOgreThermalFrame newThermalFrame;
 
   /// \brief Pointer to material switcher
   public: std::unique_ptr<OgreThermalCameraMaterialSwitcher>

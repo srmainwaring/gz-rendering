@@ -29,6 +29,7 @@
 #include "gz/rendering/ogre2/Ogre2RenderEngine.hh"
 #include "gz/rendering/ogre2/Ogre2Scene.hh"
 #include "gz/rendering/ogre2/Ogre2SegmentationCamera.hh"
+#include "gz/rendering/RenderingEvents.hh"
 #include "gz/rendering/RenderTypes.hh"
 #include "gz/rendering/Utils.hh"
 
@@ -61,9 +62,10 @@ class gz::rendering::Ogre2SegmentationCameraPrivate
   /// \param[in] _height Height of the image
   /// \param[in] _channels Number of channels
   /// \param[in] _format Image Format
-  public: gz::common::EventT<void(const uint8_t *_data,
-    unsigned int _width, unsigned int _height, unsigned int _channels,
-    const std::string &_format)> newSegmentationFrame;
+  // public: gz::common::EventT<void(const uint8_t *_data,
+  //   unsigned int _width, unsigned int _height, unsigned int _channels,
+  //   const std::string &_format)> newSegmentationFrame;
+  public: gz::rendering::events::NewOgre2SegmentationFrame newSegmentationFrame;
 
   /// \brief Material Switcher to switch item's material
   /// with colored version for segmentation

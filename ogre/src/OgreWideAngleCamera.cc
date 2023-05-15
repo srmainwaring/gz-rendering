@@ -33,6 +33,7 @@
 #endif
 
 #include "gz/rendering/CameraLens.hh"
+#include "gz/rendering/RenderingEvents.hh"
 
 #include "gz/rendering/ogre/OgreConversions.hh"
 #include "gz/rendering/ogre/OgreRenderEngine.hh"
@@ -89,9 +90,10 @@ class gz::rendering::OgreWideAngleCamera::Implementation
   public: unsigned char *wideAngleImage = nullptr;
 
   /// \brief Event used to signal camera data
-  public: gz::common::EventT<void(const unsigned char *,
-              unsigned int, unsigned int, unsigned int,
-              const std::string &)> newImageFrame;
+  // public: gz::common::EventT<void(const unsigned char *,
+  //             unsigned int, unsigned int, unsigned int,
+  //             const std::string &)> newImageFrame;
+  public: gz::rendering::events::NewOgreWideAngleFrame newImageFrame;
 };
 
 using namespace gz;

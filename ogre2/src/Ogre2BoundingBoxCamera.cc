@@ -33,6 +33,7 @@
 #include <gz/math/eigen3/Util.hh>
 #include <gz/math/OrientedBox.hh>
 
+#include "gz/rendering/RenderingEvents.hh"
 #include "gz/rendering/RenderTypes.hh"
 #include "gz/rendering/Utils.hh"
 #include "gz/rendering/ogre2/Ogre2BoundingBoxCamera.hh"
@@ -129,8 +130,9 @@ class gz::rendering::Ogre2BoundingBoxCameraPrivate
   public: Ogre2RenderTexturePtr dummyTexture {nullptr};
 
   /// \brief New BoundingBox Frame Event to notify listeners with new data
-  public: common::EventT<void(const std::vector<BoundingBox> &)>
-        newBoundingBoxes;
+  // public: common::EventT<void(const std::vector<BoundingBox> &)>
+  //       newBoundingBoxes;
+  public: gz::rendering::events::NewOgre2BoundingBoxes newBoundingBoxes;
 
   /// \brief Image / Render Texture Format
   public: Ogre::PixelFormatGpu format = Ogre::PFG_RGBA8_UNORM;

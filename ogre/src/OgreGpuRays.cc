@@ -22,6 +22,7 @@
 #include <gz/math/Helpers.hh>
 #include <gz/math/Vector3.hh>
 
+#include "gz/rendering/RenderingEvents.hh"
 #include "gz/rendering/RenderTypes.hh"
 #include "gz/rendering/ogre/OgreCamera.hh"
 #include "gz/rendering/ogre/OgreGpuRays.hh"
@@ -36,9 +37,10 @@ class gz::rendering::OgreGpuRaysPrivate
   /// \param[in] _height Height of frame.
   /// \param[in] _channels Number of channels
   /// \param[in] _format Format of frame.
-  public: gz::common::EventT<void(const float *,
-               unsigned int, unsigned int, unsigned int,
-               const std::string &)> newGpuRaysFrame;
+  // public: gz::common::EventT<void(const float *,
+  //              unsigned int, unsigned int, unsigned int,
+  //              const std::string &)> newGpuRaysFrame;
+  public: gz::rendering::events::NewOgreGpuRaysFrame newGpuRaysFrame;
 
   /// \brief Raw buffer of gpu rays data.
   public: float *gpuRaysBuffer = nullptr;

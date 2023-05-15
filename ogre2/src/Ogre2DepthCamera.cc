@@ -26,6 +26,7 @@
 #include <math.h>
 #include <gz/math/Helpers.hh>
 
+#include "gz/rendering/RenderingEvents.hh"
 #include "gz/rendering/RenderTypes.hh"
 #include "gz/rendering/ogre2/Ogre2Conversions.hh"
 #include "gz/rendering/ogre2/Ogre2DepthCamera.hh"
@@ -122,14 +123,16 @@ class gz::rendering::Ogre2DepthCameraPrivate
   public: bool renderPassDirty = false;
 
   /// \brief Event used to signal rgb point cloud data
-  public: gz::common::EventT<void(const float *,
-              unsigned int, unsigned int, unsigned int,
-              const std::string &)> newRgbPointCloud;
+  // public: gz::common::EventT<void(const float *,
+  //             unsigned int, unsigned int, unsigned int,
+  //             const std::string &)> newRgbPointCloud;
+  public: gz::rendering::events::NewOgre2RgbPointCloud newRgbPointCloud;
 
   /// \brief Event used to signal depth data
-  public: gz::common::EventT<void(const float *,
-              unsigned int, unsigned int, unsigned int,
-              const std::string &)> newDepthFrame;
+  // public: gz::common::EventT<void(const float *,
+  //             unsigned int, unsigned int, unsigned int,
+  //             const std::string &)> newDepthFrame;
+  public: gz::rendering::events::NewOgre2DepthFrame newDepthFrame;
 
   /// \brief standard deviation of particle noise
   public: double particleStddev = 0.01;
