@@ -91,6 +91,22 @@ namespace gz
       // Documentation inherited.
       public: virtual Ogre::Camera *OgreCamera() const override;
 
+      // Documentation inherited.
+      public: virtual math::Angle HFOV() const override;
+
+      // Documentation inherited.
+      public: virtual void SetHFOV(const math::Angle &_hfov) override;
+
+      // Documentation inherited.
+      public: virtual double AspectRatio() const override;
+
+      // Documentation inherited.
+      public: virtual void SetAspectRatio(const double _ratio) override;
+
+      /// \brief Synchronizes every setting that depends on AspectRatio
+      /// with Ogre's camera
+      protected: void SyncOgreCameraAspectRatio();
+
       /// \brief Create the camera.
       protected: void CreateCamera();
 

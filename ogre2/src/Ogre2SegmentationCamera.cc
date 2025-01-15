@@ -422,3 +422,39 @@ Ogre::Camera *Ogre2SegmentationCamera::OgreCamera() const
 {
   return this->ogreCamera;
 }
+
+//////////////////////////////////////////////////
+math::Angle Ogre2SegmentationCamera::HFOV() const
+{
+  return BaseCamera::HFOV();
+}
+
+//////////////////////////////////////////////////
+void Ogre2SegmentationCamera::SetHFOV(const math::Angle &_angle)
+{
+  BaseCamera::SetHFOV(_angle);
+  this->SyncOgreCameraAspectRatio();
+}
+
+//////////////////////////////////////////////////
+double Ogre2SegmentationCamera::AspectRatio() const
+{
+  return BaseCamera::AspectRatio();
+}
+
+//////////////////////////////////////////////////
+void Ogre2SegmentationCamera::SetAspectRatio(const double _ratio)
+{
+  BaseCamera::SetAspectRatio(_ratio);
+  this->SyncOgreCameraAspectRatio();
+}
+
+//////////////////////////////////////////////////
+void Ogre2SegmentationCamera::SyncOgreCameraAspectRatio()
+{
+  const double aspectRatio = this->AspectRatio();
+  const double angle = this->HFOV().Radian();
+  const double vfov = 2.0 * atan(tan(angle / 2.0) / aspectRatio);
+  this->ogreCamera->setFOVy(Ogre::Radian((Ogre::Real)vfov));
+  this->ogreCamera->setAspectRatio((Ogre::Real)aspectRatio);
+}

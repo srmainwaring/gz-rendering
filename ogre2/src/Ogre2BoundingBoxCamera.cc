@@ -1533,3 +1533,39 @@ BoundingBoxType Ogre2BoundingBoxCamera::Type() const
 {
   return this->dataPtr->type;
 }
+
+//////////////////////////////////////////////////
+math::Angle Ogre2BoundingBoxCamera::HFOV() const
+{
+  return BaseCamera::HFOV();
+}
+
+//////////////////////////////////////////////////
+void Ogre2BoundingBoxCamera::SetHFOV(const math::Angle &_angle)
+{
+  BaseCamera::SetHFOV(_angle);
+  this->SyncOgreCameraAspectRatio();
+}
+
+//////////////////////////////////////////////////
+double Ogre2BoundingBoxCamera::AspectRatio() const
+{
+  return BaseCamera::AspectRatio();
+}
+
+//////////////////////////////////////////////////
+void Ogre2BoundingBoxCamera::SetAspectRatio(const double _ratio)
+{
+  BaseCamera::SetAspectRatio(_ratio);
+  this->SyncOgreCameraAspectRatio();
+}
+
+//////////////////////////////////////////////////
+void Ogre2BoundingBoxCamera::SyncOgreCameraAspectRatio()
+{
+  const double aspectRatio = this->AspectRatio();
+  const double angle = this->HFOV().Radian();
+  const double vfov = 2.0 * atan(tan(angle / 2.0) / aspectRatio);
+  this->dataPtr->ogreCamera->setFOVy(Ogre::Radian((Ogre::Real)vfov));
+  this->dataPtr->ogreCamera->setAspectRatio((Ogre::Real)aspectRatio);
+}
