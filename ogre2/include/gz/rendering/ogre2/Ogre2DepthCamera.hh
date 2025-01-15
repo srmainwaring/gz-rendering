@@ -106,6 +106,18 @@ namespace gz
       /// \brief Implementation of the render call
       public: virtual void Render() override;
 
+      // Documentation inherited.
+      public: virtual math::Angle HFOV() const override;
+
+      // Documentation inherited.
+      public: virtual void SetHFOV(const math::Angle &_hfov) override;
+
+      // Documentation inherited.
+      public: virtual double AspectRatio() const override;
+
+      // Documentation inherited.
+      public: virtual void SetAspectRatio(const double _ratio) override;
+
       /// \brief Set the far clip distance
       /// \param[in] _far far clip distance
       public: virtual void SetFarClipPlane(const double _far) override;
@@ -142,6 +154,10 @@ namespace gz
       /// \param[in] _fov expected field of view
       /// \return valid field of view
       protected: static double LimitFOV(const double _fov);
+
+      /// \brief Synchronizes every setting that depends on AspectRatio
+      /// with Ogre's camera
+      protected: void SyncOgreCameraAspectRatio();
 
       /// \brief Create the camera.
       protected: void CreateCamera();

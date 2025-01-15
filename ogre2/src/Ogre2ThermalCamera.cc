@@ -1224,3 +1224,39 @@ Ogre::Camera *Ogre2ThermalCamera::OgreCamera() const
 {
   return this->ogreCamera;
 }
+
+//////////////////////////////////////////////////
+math::Angle Ogre2ThermalCamera::HFOV() const
+{
+  return BaseCamera::HFOV();
+}
+
+//////////////////////////////////////////////////
+void Ogre2ThermalCamera::SetHFOV(const math::Angle &_angle)
+{
+  BaseCamera::SetHFOV(_angle);
+  this->SyncOgreCameraAspectRatio();
+}
+
+//////////////////////////////////////////////////
+double Ogre2ThermalCamera::AspectRatio() const
+{
+  return BaseCamera::AspectRatio();
+}
+
+//////////////////////////////////////////////////
+void Ogre2ThermalCamera::SetAspectRatio(const double _ratio)
+{
+  BaseCamera::SetAspectRatio(_ratio);
+  this->SyncOgreCameraAspectRatio();
+}
+
+//////////////////////////////////////////////////
+void Ogre2ThermalCamera::SyncOgreCameraAspectRatio()
+{
+  const double aspectRatio = this->AspectRatio();
+  const double angle = this->HFOV().Radian();
+  const double vfov = 2.0 * atan(tan(angle / 2.0) / aspectRatio);
+  this->ogreCamera->setFOVy(Ogre::Radian((Ogre::Real)vfov));
+  this->ogreCamera->setAspectRatio((Ogre::Real)aspectRatio);
+}

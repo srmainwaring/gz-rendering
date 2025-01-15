@@ -1281,6 +1281,42 @@ RenderTargetPtr Ogre2DepthCamera::RenderTarget() const
 }
 
 //////////////////////////////////////////////////
+math::Angle Ogre2DepthCamera::HFOV() const
+{
+  return BaseCamera::HFOV();
+}
+
+//////////////////////////////////////////////////
+void Ogre2DepthCamera::SetHFOV(const math::Angle &_angle)
+{
+  BaseCamera::SetHFOV(_angle);
+  this->SyncOgreCameraAspectRatio();
+}
+
+//////////////////////////////////////////////////
+double Ogre2DepthCamera::AspectRatio() const
+{
+  return BaseCamera::AspectRatio();
+}
+
+//////////////////////////////////////////////////
+void Ogre2DepthCamera::SetAspectRatio(const double _ratio)
+{
+  BaseCamera::SetAspectRatio(_ratio);
+  this->SyncOgreCameraAspectRatio();
+}
+
+//////////////////////////////////////////////////
+void Ogre2DepthCamera::SyncOgreCameraAspectRatio()
+{
+  const double aspectRatio = this->AspectRatio();
+  const double angle = this->HFOV().Radian();
+  const double vfov = 2.0 * atan(tan(angle / 2.0) / aspectRatio);
+  this->ogreCamera->setFOVy(Ogre::Radian((Ogre::Real)vfov));
+  this->ogreCamera->setAspectRatio((Ogre::Real)aspectRatio);
+}
+
+//////////////////////////////////////////////////
 double Ogre2DepthCamera::LimitFOV(const double _fov)
 {
   return std::min(std::max(0.001, _fov), GZ_PI * 0.999);

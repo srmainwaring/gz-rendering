@@ -147,6 +147,22 @@ namespace gz
       /// the ogre id which appears in the map.
       public: void MarkVisibleBoxes();
 
+      // Documentation inherited.
+      public: virtual math::Angle HFOV() const override;
+
+      // Documentation inherited.
+      public: virtual void SetHFOV(const math::Angle &_hfov) override;
+
+      // Documentation inherited.
+      public: virtual double AspectRatio() const override;
+
+      // Documentation inherited.
+      public: virtual void SetAspectRatio(const double _ratio) override;
+
+      /// \brief Synchronizes every setting that depends on AspectRatio
+      /// with Ogre's camera
+      protected: void SyncOgreCameraAspectRatio();
+
       /// \brief Get a pointer to the render target.
       /// \return Pointer to the render target
       protected: virtual RenderTargetPtr RenderTarget() const override;
